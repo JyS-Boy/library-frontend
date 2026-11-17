@@ -43,7 +43,15 @@ export const routes: Routes = [
         loadChildren: () =>
           import('./features/authors/author.routes')
             .then(m => m.AUTHOR_ROUTES)
-      }
+      },
+
+      {
+        path: 'categories',
+        loadChildren: () =>
+        import('./features/categories/category.routes')
+        .then(m => m.CATEGORY_ROUTES)
+      },
+
     ],
   },
 

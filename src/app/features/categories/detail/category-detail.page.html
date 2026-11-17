@@ -1,0 +1,34 @@
+<div class="page">
+
+  <h1>Detalle de la Categoría</h1>
+
+  @if (category()) {
+
+    <div class="card">
+
+      <div class="row">
+        <strong>Id:</strong>
+        <span>{{ category()?.id }}</span>
+      </div>
+
+      <div class="row">
+        <strong>Nombre:</strong>
+        <span>{{ category()?.name }}</span>
+      </div>
+
+      <div class="row">
+        <strong>Descripción:</strong>
+        <span>
+          {{ category()?.description || 'Sin descripción' }}
+        </span>
+      </div>
+
+    </div>
+
+  } @else {
+
+    <p>Cargando...</p>
+
+  }
+
+</div>

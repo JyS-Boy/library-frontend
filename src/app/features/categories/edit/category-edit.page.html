@@ -1,0 +1,40 @@
+<div class="page">
+
+  <h1>Editar Categoría</h1>
+
+  <form
+    [formGroup]="form"
+    (ngSubmit)="submit()">
+
+    <div class="form-group">
+
+      <label>Nombre</label>
+
+      <input
+        type="text"
+        formControlName="name">
+
+    </div>
+
+    <div class="form-group">
+
+      <label>Descripción</label>
+
+      <textarea
+        rows="5"
+        formControlName="description">
+      </textarea>
+
+    </div>
+
+    <button
+      type="submit"
+      [disabled]="loading">
+
+      {{ loading ? 'Actualizando...' : 'Actualizar' }}
+
+    </button>
+
+  </form>
+
+</div>
