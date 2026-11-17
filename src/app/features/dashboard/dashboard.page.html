@@ -1,0 +1,95 @@
+<div class="dashboard">
+
+  <div class="dashboard__welcome">
+
+    <h1>
+      Bienvenido, {{ userName }}
+    </h1>
+
+    <p>
+      Sistema de Gestión Bibliotecaria
+    </p>
+
+  </div>
+
+  <div class="dashboard__cards">
+
+    @if(isAdmin){
+
+      <a
+        routerLink="/users"
+        class="card">
+
+        <h3>Usuarios</h3>
+
+        <span>
+          Administrar usuarios
+        </span>
+
+      </a>
+
+    }
+
+    <a
+      routerLink="/authors"
+      class="card">
+
+      <h3>Autores</h3>
+
+      <span>
+        Gestionar autores
+      </span>
+
+    </a>
+
+    <a
+      routerLink="/categories"
+      class="card">
+
+      <h3>Categorías</h3>
+
+      <span>
+        Gestionar categorías
+      </span>
+
+    </a>
+
+    <a
+      routerLink="/books"
+      class="card">
+
+      <h3>Libros</h3>
+
+      <span>
+        Gestionar libros
+      </span>
+
+    </a>
+
+    <a
+      routerLink="/readers"
+      class="card">
+
+      <h3>Lectores</h3>
+
+      <span>
+        Gestionar lectores
+      </span>
+
+    </a>
+
+    <a
+      routerLink="/loans"
+      class="card">
+
+      <h3>Préstamos</h3>
+
+      <span>
+        Gestionar préstamos
+      </span>
+
+    </a>
+
+  </div>
+
+</div>

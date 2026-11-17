@@ -1,0 +1,32 @@
+<div class="page">
+
+  <h1>Detalle del Autor</h1>
+
+  @if (author()) {
+
+    <div class="card">
+
+      <div class="row">
+        <strong>Id:</strong>
+        <span>{{ author()?.id }}</span>
+      </div>
+
+      <div class="row">
+        <strong>Nombre:</strong>
+        <span>{{ author()?.name }}</span>
+      </div>
+
+      <div class="row">
+        <strong>País:</strong>
+        <span>{{ author()?.country }}</span>
+      </div>
+
+    </div>
+
+  } @else {
+
+    <p>Cargando...</p>
+
+  }
+
+</div>

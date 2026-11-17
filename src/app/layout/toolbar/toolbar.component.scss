@@ -1,0 +1,36 @@
+.toolbar {
+  height: 64px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 24px;
+
+  background: #1976d2;
+
+  color: white;
+}
+
+.toolbar-right {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+}
+
+button {
+  border: none;
+
+  background: white;
+
+  color: #1976d2;
+
+  padding: 8px 12px;
+
+  border-radius: 4px;
+
+  cursor: pointer;
+}

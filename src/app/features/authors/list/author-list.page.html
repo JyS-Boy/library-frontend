@@ -1,0 +1,44 @@
+<div class="page">
+
+  <h1>Autores</h1>
+    <a routerLink="/authors/new">
+        Nuevo Autor
+    </a>
+  <table>
+
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>País</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+
+    <tbody>
+
+      @for (author of authors(); track author.id) {
+
+        <tr>
+          <td>
+            <a [routerLink]="['/authors', author.id]">
+                {{ author.name }}
+            </a>
+        </td>
+
+        <td>
+            {{ author.country }}
+        </td>
+
+        <td>
+            <a [routerLink]="['/authors', author.id, 'edit']">Editar</a>
+        @if (isAdmin) {<button (click)="deleteAuthor(author.id)">Eliminar</button>}
+        </td>
+        </tr>
+
+      }
+
+    </tbody>
+
+  </table>
+
+</div>

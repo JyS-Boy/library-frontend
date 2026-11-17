@@ -1,0 +1,21 @@
+<header class="toolbar">
+
+  <div class="toolbar-left">
+    <h2>Library API</h2>
+  </div>
+
+  <div class="toolbar-right">
+
+    <span>
+      {{ authService.currentUser()?.userName }}
+    </span>
+
+    <button
+      type="button"
+      (click)="logout()">
+      Cerrar sesión
+    </button>
+
+  </div>
+
+</header>
