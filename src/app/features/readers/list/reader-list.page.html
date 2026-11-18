@@ -1,0 +1,64 @@
+<div class="page">
+
+  <h1>Lectores</h1>
+
+  <a routerLink="/readers/new">
+    Nuevo Lector
+  </a>
+
+  <table>
+
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Email</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+
+    <tbody>
+
+      @for (
+        reader of readers();
+        track reader.id
+      ) {
+
+        <tr>
+
+          <td>
+            <a [routerLink]="['/readers', reader.id]">
+            {{ reader.fullName }}
+            </a>
+          </td>
+
+          <td>
+            {{ reader.email }}
+          </td>
+
+          <td>
+            <a [routerLink]="['/readers', reader.id, 'edit']">
+              Editar
+            </a>
+            @if (isAdmin) {
+               |
+              <button
+              type="button"
+              (click)="deleteReader(reader.id)">
+              Eliminar
+              </button>
+            }
+          </td>
+        </tr>
+      }
+
+    </tbody>
+
+  </table>
+
+  <div class="pagination">
+    <button 
+      type="button" (click)="previousPage()" [disabled]="currentPage() === 1">Anterior</button>
+    <span>Página {{ currentPage() }} de {{ totalPages() }}</span>
+    <button type="button" (click)="nextPage()" [disabled]="currentPage() === totalPages()">Siguiente</button>
+  </div>
+</div>

@@ -51,6 +51,13 @@ export const routes: Routes = [
         import('./features/categories/category.routes')
         .then(m => m.CATEGORY_ROUTES)
       },
+      
+      {
+        path: 'readers',
+        loadChildren: () =>
+        import('./features/readers/reader.routes')
+        .then(m => m.READER_ROUTES)
+      },
 
     ],
   },
