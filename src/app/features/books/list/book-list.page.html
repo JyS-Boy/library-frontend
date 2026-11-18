@@ -1,0 +1,64 @@
+<div class="page">
+
+  <h1>Libros</h1>
+
+  <a routerLink="/books/new">
+    Nuevo Libro
+  </a>
+
+  <table>
+
+    <thead>
+      <tr>
+        <th>Título</th>
+        <th>ISBN</th>
+        <th>Stock</th>
+        <th>Autor</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+
+    <tbody>
+
+      @for (
+        book of books();
+        track book.id
+      ) {
+
+        <tr>
+
+          <td>
+            <a [routerLink]="['/books', book.id]">
+            {{ book.title }}
+            </a>
+          </td>
+
+          <td>
+            {{ book.isbn }}
+          </td>
+
+          <td>
+            {{ book.stock }}
+          </td>
+
+          <td>
+            {{ book.author }}
+          </td>
+          <td>
+            <a [routerLink]="['/books', book.id, 'edit']">
+              Editar
+            </a>
+            @if (isAdmin) {
+              |
+              <button 
+              type="button"
+              (click)="deleteBook(book.id)">
+                Eliminar
+              </button>
+            }
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

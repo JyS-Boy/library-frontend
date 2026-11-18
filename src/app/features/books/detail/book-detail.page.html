@@ -1,0 +1,52 @@
+<div class="page">
+
+  <h1>Detalle del Libro</h1>
+
+  @if (book()) {
+
+    <div class="card">
+
+      <div class="row">
+        <strong>Id:</strong>
+        <span>{{ book()?.id }}</span>
+      </div>
+
+      <div class="row">
+        <strong>Título:</strong>
+        <span>{{ book()?.title }}</span>
+      </div>
+
+      <div class="row">
+        <strong>ISBN:</strong>
+        <span>{{ book()?.isbn }}</span>
+      </div>
+
+      <div class="row">
+        <strong>Stock:</strong>
+        <span>{{ book()?.stock }}</span>
+      </div>
+
+      <div class="row">
+        <strong>Año:</strong>
+        <span>{{ book()?.publicationYear }}</span>
+      </div>
+
+      <div class="row">
+        <strong>Autor:</strong>
+        <span>{{ book()?.author }}</span>
+      </div>
+
+      <div class="row">
+        <strong>Categoría:</strong>
+        <span>{{ book()?.category }}</span>
+      </div>
+
+    </div>
+
+  } @else {
+
+    <p>Cargando...</p>
+
+  }
+
+</div>
