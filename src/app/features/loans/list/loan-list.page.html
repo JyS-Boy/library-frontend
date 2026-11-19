@@ -8,6 +8,7 @@
                 <th>Lector</th>
                 <th>Fecha de préstamo</th>
                 <th>Estado</th>
+                <th>Acciones</th>
             </tr>
         </thead>
 
@@ -19,8 +20,23 @@
                         {{ loan.reader }}
                     </a>
                 </td>
-                <td>{{ loan.loanDate }}</td>
-                <td>{{ loan.status }}</td>
+                <td>{{ loan.loanDate | date:'dd/MM/yyyy HH:mm' }}</td>
+                <td>
+                    @if (loan.status === 'Registered') {
+                    <span class="badge badge-active">Registrado</span>
+                    } @else {
+                    <span class="badge badge-returned">Devuelto</span>
+                    }
+                </td>
+
+                <td>
+                    <a [routerLink]="['/loans', loan.id]">Detalle</a>
+                    @if (loan.status === 'Registered') {
+                    |
+                    <button type="button" (click)="returnLoan(loan.id)">Devolver
+                    </button>
+                    }
+                </td>
             </tr>
             }
         </tbody>
