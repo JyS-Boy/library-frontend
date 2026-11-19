@@ -1,0 +1,28 @@
+<div class="page">
+    <h1>Préstamos</h1>
+    <a routerLink="/loans/new">Nuevo Préstamo</a>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Lector</th>
+                <th>Fecha de préstamo</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @for (loan of loans(); track loan.id){
+            <tr>
+                <td>
+                    <a [routerLink]="['/loans', loan.id]">
+                        {{ loan.reader }}
+                    </a>
+                </td>
+                <td>{{ loan.loanDate }}</td>
+                <td>{{ loan.status }}</td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>

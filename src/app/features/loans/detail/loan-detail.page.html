@@ -1,0 +1,93 @@
+<div class="page">
+
+  <h1>Detalle del Préstamo</h1>
+
+  @if (loan()) {
+
+    <div class="card">
+
+      <div class="row">
+        <strong>Id:</strong>
+        <span>{{ loan()?.id }}</span>
+      </div>
+
+      <div class="row">
+        <strong>Lector:</strong>
+        <span>{{ loan()?.reader }}</span>
+      </div>
+
+      <div class="row">
+        <strong>Bibliotecario:</strong>
+        <span>{{ loan()?.librarian }}</span>
+      </div>
+
+      <div class="row">
+        <strong>Fecha de préstamo:</strong>
+        <span>{{ loan()?.loanDate }}</span>
+      </div>
+
+      <div class="row">
+        <strong>Fecha esperada de devolución:</strong>
+        <span>
+          {{ loan()?.expectedReturnDate }}
+        </span>
+      </div>
+
+      <div class="row">
+        <strong>Estado:</strong>
+        <span>{{ loan()?.status }}</span>
+      </div>
+      <hr>
+
+<h3>Libros Prestados</h3>
+
+@if (loan()?.details?.length) {
+
+  <table>
+
+    <thead>
+      <tr>
+        <th>Libro</th>
+        <th>Cantidad</th>
+      </tr>
+    </thead>
+
+    <tbody>
+
+      @for (
+        detail of loan()!.details;
+        track detail.book
+      ) {
+
+        <tr>
+
+          <td>
+            {{ detail.book }}
+          </td>
+
+          <td>
+            {{ detail.quantity }}
+          </td>
+
+        </tr>
+
+      }
+
+    </tbody>
+
+  </table>
+
+} @else {
+
+  <p>No existen libros asociados.</p>
+
+}
+    </div>
+
+  } @else {
+
+    <p>Cargando...</p>
+
+  }
+
+</div>

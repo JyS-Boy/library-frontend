@@ -1,0 +1,46 @@
+<div class="page">
+    <h1>Nuevo Préstamo</h1>
+    <form [formGroup]="form" (ngSubmit)="submit()">
+        <div class="form-group">
+            <label>Lector</label>
+            <select formControlName="readerId">
+                <option value="">Seleccione un lector</option>
+                @for (reader of readers(); track reader.id) {
+                <option [value]="reader.id">{{ reader.fullName }}</option>
+                }
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Fecha esperada de devolución</label>
+            <input type="date" formControlName="expectedReturnDate">
+        </div>
+
+        <div formArrayName="details">
+            @for (detail of details.controls; track $index) {
+            <div [formGroupName]="$index" class="form-group">
+                <label>Libro {{ $index + 1 }}</label>
+                <select formControlName="bookId">
+                    <option value="">Seleccione un libro</option>
+                    @for (book of books(); track book.id) {
+                    <option [value]="book.id">{{ book.title }}</option>
+                    }
+                </select>
+
+                @if (details.length > 1) {
+                <button type="button" (click)="removeBook($index)">
+                    Eliminar
+                </button>
+                }
+            </div>
+            }
+        </div>
+
+        <button type="button" (click)="addBook()" [disabled]="details.length >= 2">
+            Agregar libro
+        </button>
+        <button type="submit" [disabled]="loading">
+            {{loading? 'Registrando...': 'Registrar préstamo'}}
+        </button>
+    </form>
+</div>
