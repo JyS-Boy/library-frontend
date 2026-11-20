@@ -1,59 +1,190 @@
-# LibraryFrontend
+# 📚 Library Management System
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.8.
+Sistema de gestión de biblioteca desarrollado con Angular 21 y ASP.NET Core.
 
-## Development server
+## 🚀 Descripción
 
-To start a local development server, run:
+Library Management System es una aplicación web que permite administrar:
+
+- Autores
+- Categorías
+- Libros
+- Lectores
+- Préstamos
+- Usuarios
+
+La aplicación consume una API REST protegida mediante JWT y utiliza una arquitectura basada en componentes standalone.
+
+---
+
+## 🛠 Tecnologías Utilizadas
+
+### Frontend
+
+- Angular 21
+- TypeScript
+- Signals
+- Reactive Forms
+- Angular Router
+- HttpClient
+- Standalone Components
+- SweetAlert2
+- SCSS
+
+### Backend
+
+- ASP.NET Core
+- Entity Framework Core
+- SQL Server
+- JWT Authentication
+
+---
+
+## ✨ Funcionalidades
+
+### 🔐 Seguridad
+
+- Login mediante JWT
+- Auth Guard
+- Admin Guard
+- Role Guard
+- Auth Interceptor
+- Control de acceso por roles
+
+### 👤 Usuarios
+
+- Listado paginado
+- Registro
+- Edición
+- Eliminación lógica
+- Protección del último administrador
+
+### ✍️ Autores
+
+- Listado
+- Detalle
+- Registro
+- Edición
+- Eliminación
+
+### 🏷️ Categorías
+
+- Listado
+- Detalle
+- Registro
+- Edición
+- Eliminación
+
+### 📖 Libros
+
+- Listado paginado
+- Registro
+- Edición
+- Detalle
+- Eliminación
+
+### 👥 Lectores
+
+- Listado paginado
+- Registro
+- Edición
+- Detalle
+- Eliminación
+
+### 📚 Préstamos
+
+- Registro de préstamos
+- Consulta de detalle
+- Devolución de préstamos
+- Control de stock
+- Validaciones de negocio
+
+---
+
+## 🎯 Valor Agregado
+
+- SweetAlert2 para mensajes y confirmaciones.
+- Componente de paginación reutilizable.
+- Loading state en formularios.
+- Pantalla Forbidden (403).
+- Pantalla Not Found (404).
+- Protección contra eliminación del último administrador.
+- Arquitectura basada en Features.
+
+---
+
+## 📂 Estructura del Proyecto
+
+```text
+src
+│
+├── app
+│   ├── core
+│   │   ├── constants
+│   │   ├── guards
+│   │   ├── interceptors
+│   │   ├── models
+│   │   └── services
+│   │
+│   ├── features
+│   │   ├── auth
+│   │   ├── authors
+│   │   ├── books
+│   │   ├── categories
+│   │   ├── dashboard
+│   │   ├── errors
+│   │   ├── loans
+│   │   ├── readers
+│   │   └── users
+│   │
+│   ├── layout
+│   └── shared
+│       └── components
+│           └── pagination
+│
+└── environments
+```
+
+---
+
+## ⚙️ Instalación
+
+### Instalar dependencias
+
+```bash
+npm install
+```
+
+### Ejecutar aplicación
 
 ```bash
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Aplicación disponible en:
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
+```text
+http://localhost:4200
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+---
 
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
+## 🏗️ Build de Producción
 
 ```bash
 ng build
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Los archivos compilados se generan en:
 
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
+```text
+dist/library-frontend
 ```
 
-## Running end-to-end tests
+---
 
-For end-to-end (e2e) testing, run:
+## 👨‍💻 Autor
 
-```bash
-ng e2e
-```
+**Jorge Luis Palomino Garcia**
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Proyecto desarrollado para el curso **Angular 21 – Web Apps**.
