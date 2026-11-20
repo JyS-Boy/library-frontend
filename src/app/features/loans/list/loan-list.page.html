@@ -33,7 +33,8 @@
                     <a [routerLink]="['/loans', loan.id]">Detalle</a>
                     @if (loan.status === 'Registered') {
                     |
-                    <button type="button" (click)="returnLoan(loan.id)">Devolver
+                    <button type="button" [disabled]="loading" (click)="returnLoan(loan.id)">
+                        {{ loading ? 'Procesando...' : 'Devolver' }}
                     </button>
                     }
                 </td>
@@ -41,4 +42,7 @@
             }
         </tbody>
     </table>
+    <app-pagination [pageNumber]="pageNumber()" [totalPages]="totalPages()" (previous)="previousPage()"
+        (next)="nextPage()">
+    </app-pagination>
 </div>

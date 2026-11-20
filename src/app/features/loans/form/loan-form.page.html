@@ -39,8 +39,6 @@
         <button type="button" (click)="addBook()" [disabled]="details.length >= 2">
             Agregar libro
         </button>
-        <button type="submit" [disabled]="loading">
-            {{loading? 'Registrando...': 'Registrar préstamo'}}
-        </button>
+        <button type="submit" [disabled]="loading">{{loading? 'Registrando...': 'Registrar préstamo'}}</button>
     </form>
 </div>

@@ -4,70 +4,82 @@ import { RouterLink } from '@angular/router';
 import { AuthorService } from '../../../core/services/author.service';
 import { ListAuthorItem } from '../../../core/models/author.model';
 import { AuthService } from '../../../core/services/auth.service';
+import { AlertService } from '../../../core/services/alert.service';
+import { PaginationComponent } from '../../../shared/components/pagination/pagination.component';
+
 
 @Component({
-  selector: 'app-author-list-page',
-  standalone: true,
-  imports: [CommonModule, RouterLink],
-  templateUrl: './author-list.page.html',
-  styleUrls: ['./author-list.page.scss']
+    selector: 'app-author-list-page',
+    standalone: true,
+    imports: [CommonModule, RouterLink, PaginationComponent],
+    providers: [AlertService],
+    templateUrl: './author-list.page.html',
+    styleUrls: ['./author-list.page.scss']
 })
 export class AuthorListPage implements OnInit {
 
-  private readonly authorService = inject(AuthorService);
-  private readonly authService = inject(AuthService);
- 
-  get isAdmin(): boolean {
-   return this.authService
-   .currentUser()
-   ?.role === 'Admin';
- }
+    private readonly authorService = inject(AuthorService);
+    private readonly authService = inject(AuthService);
+    private readonly alertService = inject(AlertService);
 
-  readonly authors = signal<ListAuthorItem[]>([]);
+    get isAdmin(): boolean {
+        return this.authService
+            .currentUser()
+            ?.role === 'Admin';
+    }
 
-  ngOnInit(): void {
-    this.loadAuthors();
-  }
+    readonly authors = signal<ListAuthorItem[]>([]);
+    readonly pageNumber = signal(1);
+    readonly pageSize = signal(10);
+    readonly totalPages = signal(0);
+
+    ngOnInit(): void {
+        this.loadAuthors();
+    }
+
+    previousPage(): void {
+        if (this.pageNumber() > 1) {
+            this.pageNumber.update(page => page - 1);
+            this.loadAuthors();
+        }
+    }
+
+    nextPage(): void {
+        if (this.pageNumber() < this.totalPages()) {
+            this.pageNumber.update(page => page + 1);
+            this.loadAuthors();
+        }
+    }
 
     loadAuthors(): void {
         this.authorService
-        .list(1, 10)
-        .subscribe({
-            next: (response) => {
-                console.log('RESPONSE',response);
-            this.authors.set(
-                response.collection ?? []
-            );
-
-                console.log('AUTHORS', this.authors());
-        },
-        error: (err) => {
-          console.error('ERROR', err);
-        }
-      });
+            .list(this.pageNumber(), this.pageSize())
+            .subscribe({
+                next: response => {
+                    this.authors.set(response.collection ?? []);
+                    this.totalPages.set(response.totalPages ?? 0);
+                }
+            });
     }
 
-    deleteAuthor(id: string): void {
-        const confirmed =
-            confirm('¿Desea eliminar este autor?');
+    async deleteAuthor(id: string, name: string): Promise<void> {
+        const confirmed = await this.alertService.confirm('Eliminar Autor', `¿Desea eliminar al autor "${name}"?`);
 
         if (!confirmed) {
             return;
         }
 
         this.authorService
-        .delete(id)
-        .subscribe({
-        next: () => {
-
-            this.loadAuthors();
-
-        },
-        error: (error) => {
-            console.error(error);
-           alert(`Error: ${error.status} - ${error.message}`
-        );
-        }
-        });
+            .delete(id)
+            .subscribe({
+                next: async () => {
+                    await this.alertService.success('Autor eliminado', `El autor ha sido eliminado correctamente.`);
+                    this.loadAuthors();
+                },
+                error: async (error) => {
+                    console.error(error);
+                    await this.alertService.error('Error al eliminar autor', `Error: ${error.status} - ${error.message}`);
+                }
+            });
     }
 }

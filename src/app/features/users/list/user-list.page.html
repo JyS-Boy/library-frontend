@@ -1,0 +1,33 @@
+<div class="page">
+    <h1>Usuarios</h1>
+    <a routerLink="/users/new">Nuevo Usuario</a>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Usuario</th>
+                <th>Rol</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @for (user of users(); track user.id) {
+            <tr>
+                <td><a routerLink="/users/{{ user.id }}">{{ user.userName }}</a></td>
+                <td>{{ user.role }}</td>
+                <td>
+                    <a [routerLink]="['/users', user.id]">Detalle</a>
+                    |
+                    <a [routerLink]="['/users', user.id, 'edit']">Editar</a>
+                    |
+                    <button type="button" (click)="deleteUser(user.id, user.userName)">Eliminar</button>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+    <app-pagination [pageNumber]="pageNumber()" [totalPages]="totalPages()" (previous)="previousPage()"
+        (next)="nextPage()">
+    </app-pagination>
+</div>

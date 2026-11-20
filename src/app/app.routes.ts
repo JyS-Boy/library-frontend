@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { ShellComponent } from './layout/shell/shell.component';
 import { authGuard } from './core/guards/auth.guard';
+import { adminGuard } from './core/guards/admin.guard';
 
 export const routes: Routes = [
   // Rutas públicas
@@ -48,28 +49,35 @@ export const routes: Routes = [
       {
         path: 'categories',
         loadChildren: () =>
-        import('./features/categories/category.routes')
-        .then(m => m.CATEGORY_ROUTES)
-      },
-      
-      {
-        path: 'readers',
-        loadChildren: () =>
-        import('./features/readers/reader.routes')
-        .then(m => m.READER_ROUTES)
+          import('./features/categories/category.routes')
+            .then(m => m.CATEGORY_ROUTES)
       },
 
       {
-         path: 'books',
-          loadChildren: () =>
+        path: 'readers',
+        loadChildren: () =>
+          import('./features/readers/reader.routes')
+            .then(m => m.READER_ROUTES)
+      },
+
+      {
+        path: 'books',
+        loadChildren: () =>
           import('./features/books/book.routes')
-          .then(m => m.BOOK_ROUTES)
+            .then(m => m.BOOK_ROUTES)
       },
       {
         path: 'loans',
         loadChildren: () =>
-        import('./features/loans/loan.routes')
-        .then(m => m.LOAN_ROUTES)
+          import('./features/loans/loan.routes')
+            .then(m => m.LOAN_ROUTES)
+      },
+      {
+        path: 'users',
+        canActivate: [adminGuard],
+        loadChildren: () =>
+          import('./features/users/user.routes')
+            .then(m => m.USER_ROUTES)
       }
     ],
   },

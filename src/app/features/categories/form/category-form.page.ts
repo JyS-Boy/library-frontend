@@ -1,13 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import {
-  FormBuilder,
-  ReactiveFormsModule,
-  Validators
-} from '@angular/forms';
-
+import { AlertService } from '../../../core/services/alert.service';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-
 import { CategoryService } from '../../../core/services/category.service';
 
 @Component({
@@ -20,21 +15,17 @@ import { CategoryService } from '../../../core/services/category.service';
   templateUrl: './category-form.page.html',
   styleUrls: ['./category-form.page.scss']
 })
+
 export class CategoryFormPage {
 
   private readonly fb = inject(FormBuilder);
-
-  private readonly router =
-    inject(Router);
-
-  private readonly categoryService =
-    inject(CategoryService);
+  private readonly router = inject(Router);
+  private readonly categoryService = inject(CategoryService);
+  private readonly alertService = inject(AlertService);
 
   loading = false;
 
-  form = this.fb.group({
-    name: ['', Validators.required]
-  });
+  form = this.fb.group({ name: ['', Validators.required] });
 
   submit(): void {
 
@@ -44,26 +35,16 @@ export class CategoryFormPage {
 
     this.loading = true;
 
-    this.categoryService
-      .create({
-        name: this.form.value.name!
-      })
+    this.categoryService.create({ name: this.form.value.name! })
       .subscribe({
-        next: () => {
-
+        next: async () => {
           this.loading = false;
-
-          this.router.navigate([
-            '/categories'
-          ]);
+          await this.alertService.success('Categoría creada', 'La categoría fue registrada correctamente.');
+          this.router.navigate(['/categories']);
         },
-        error: () => {
-
+        error: async (error) => {
           this.loading = false;
-
-          alert(
-            'Error al crear categoría'
-          );
+          await this.alertService.error('Error', error.error?.message ?? 'No fue posible registrar la categoría.');
         }
       });
   }

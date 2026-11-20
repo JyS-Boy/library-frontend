@@ -54,11 +54,8 @@
     </tbody>
 
   </table>
-
-  <div class="pagination">
-    <button 
-      type="button" (click)="previousPage()" [disabled]="currentPage() === 1">Anterior</button>
-    <span>Página {{ currentPage() }} de {{ totalPages() }}</span>
-    <button type="button" (click)="nextPage()" [disabled]="currentPage() === totalPages()">Siguiente</button>
-  </div>
+  
+    <app-pagination [pageNumber]="pageNumber()" [totalPages]="totalPages()" (previous)="previousPage()"
+        (next)="nextPage()">
+    </app-pagination>
 </div>

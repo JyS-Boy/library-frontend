@@ -1,11 +1,8 @@
 <div class="page">
-
   <h1>Autores</h1>
-    <a routerLink="/authors/new">
-        Nuevo Autor
-    </a>
-  <table>
+  <a routerLink="/authors/new">Nuevo Autor</a>
 
+  <table>
     <thead>
       <tr>
         <th>Nombre</th>
@@ -15,30 +12,18 @@
     </thead>
 
     <tbody>
-
       @for (author of authors(); track author.id) {
-
-        <tr>
-          <td>
-            <a [routerLink]="['/authors', author.id]">
-                {{ author.name }}
-            </a>
+      <tr>
+        <td><a [routerLink]="['/authors', author.id]">{{ author.name }}</a></td>
+        <td>{{ author.country }}</td>
+        <td><a [routerLink]="['/authors', author.id, 'edit']">Editar</a>
+          @if (isAdmin) {<button (click)="deleteAuthor(author.id, author.name)">Eliminar</button>}
         </td>
-
-        <td>
-            {{ author.country }}
-        </td>
-
-        <td>
-            <a [routerLink]="['/authors', author.id, 'edit']">Editar</a>
-        @if (isAdmin) {<button (click)="deleteAuthor(author.id)">Eliminar</button>}
-        </td>
-        </tr>
-
+      </tr>
       }
-
     </tbody>
-
   </table>
-
+  <app-pagination [pageNumber]="pageNumber()" [totalPages]="totalPages()" (previous)="previousPage()"
+    (next)="nextPage()">
+  </app-pagination>
 </div>

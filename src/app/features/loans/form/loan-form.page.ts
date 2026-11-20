@@ -8,6 +8,7 @@ import { LoanService } from '../../../core/services/loan.service';
 import { AuthService } from '../../../core/services/auth.service';
 import { ListReaderItem } from '../../../core/models/reader.model';
 import { ListBookItem } from '../../../core/models/book.model';
+import { AlertService } from '../../../core/services/alert.service';
 
 @Component({
     selector: 'app-loan-form-page',
@@ -27,6 +28,7 @@ export class LoanFormPage implements OnInit {
     private readonly bookService = inject(BookService);
     private readonly loanService = inject(LoanService);
     private readonly authService = inject(AuthService);
+    private readonly alertService = inject(AlertService);
 
     readonly readers = signal<ListReaderItem[]>([]);
     readonly books = signal<ListBookItem[]>([]);
@@ -70,9 +72,7 @@ export class LoanFormPage implements OnInit {
             .list(1, 100)
             .subscribe({
                 next: response => {
-                    this.readers.set(
-                        response.collection ?? []
-                    );
+                    this.readers.set(response.collection ?? []);
                 }
             });
     }
@@ -83,17 +83,12 @@ export class LoanFormPage implements OnInit {
             .list(1, 100)
             .subscribe({
                 next: response => {
-
-                    this.books.set(
-                        response.collection ?? []
-                    );
-
+                    this.books.set(response.collection ?? []);
                 }
             });
     }
 
     submit(): void {
-
         if (this.form.invalid) {
             return;
         }
@@ -101,7 +96,6 @@ export class LoanFormPage implements OnInit {
         this.loading = true;
 
         const currentUser = this.authService.currentUser();
-
         this.loanService
             .create({
                 readerId: this.form.value.readerId!,
@@ -115,15 +109,15 @@ export class LoanFormPage implements OnInit {
                 )
             })
             .subscribe({
-                next: () => {
+                next: async () => {
                     this.loading = false;
-                    this.router.navigate([
-                        '/loans']);
+                    await this.alertService.success('Préstamo registrado','El préstamo fue registrado correctamente.');
+                    this.router.navigate(['/loans']);
                 },
-                error: error => {
+                error: async error => {
                     console.error(error);
                     this.loading = false;
-                    alert('Error al registrar préstamo');
+                    await this.alertService.error('Error', error.error?.message ?? 'No fue posible registrar el préstamo.');
                 }
             });
     }

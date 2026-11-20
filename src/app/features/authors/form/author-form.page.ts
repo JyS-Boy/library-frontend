@@ -1,13 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import {
-  FormBuilder,
-  ReactiveFormsModule,
-  Validators
-} from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-
 import { AuthorService } from '../../../core/services/author.service';
+import { AlertService } from '../../../core/services/alert.service';
 
 @Component({
   selector: 'app-author-form-page',
@@ -22,12 +18,9 @@ import { AuthorService } from '../../../core/services/author.service';
 export class AuthorFormPage {
 
   private readonly fb = inject(FormBuilder);
-
-  private readonly router =
-    inject(Router);
-
-  private readonly authorService =
-    inject(AuthorService);
+  private readonly router = inject(Router);
+  private readonly authorService = inject(AuthorService);
+  private readonly alertService = inject(AlertService);
 
   loading = false;
 
@@ -50,17 +43,14 @@ export class AuthorFormPage {
         country: this.form.value.country!
       })
       .subscribe({
-        next: () => {
-
+        next: async () => {
           this.loading = false;
-
+          await this.alertService.success('Autor creado', 'El autor fue registrado correctamente.');
           this.router.navigate(['/authors']);
         },
-        error: () => {
-
+        error: async (error) => {
           this.loading = false;
-
-          alert('Error al crear autor');
+          await this.alertService.error('Error', error.error?.message ?? 'No fue posible registrar el autor.');
         }
       });
   }

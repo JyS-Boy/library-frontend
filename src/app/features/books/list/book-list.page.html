@@ -21,44 +21,45 @@
     <tbody>
 
       @for (
-        book of books();
-        track book.id
+      book of books();
+      track book.id
       ) {
 
-        <tr>
+      <tr>
 
-          <td>
-            <a [routerLink]="['/books', book.id]">
+        <td>
+          <a [routerLink]="['/books', book.id]">
             {{ book.title }}
-            </a>
-          </td>
+          </a>
+        </td>
 
-          <td>
-            {{ book.isbn }}
-          </td>
+        <td>
+          {{ book.isbn }}
+        </td>
 
-          <td>
-            {{ book.stock }}
-          </td>
+        <td>
+          {{ book.stock }}
+        </td>
 
-          <td>
-            {{ book.author }}
-          </td>
-          <td>
-            <a [routerLink]="['/books', book.id, 'edit']">
-              Editar
-            </a>
-            @if (isAdmin) {
-              |
-              <button 
-              type="button"
-              (click)="deleteBook(book.id)">
-                Eliminar
-              </button>
-            }
-          </td>
-        </tr>
+        <td>
+          {{ book.author }}
+        </td>
+        <td>
+          <a [routerLink]="['/books', book.id, 'edit']">
+            Editar
+          </a>
+          @if (isAdmin) {
+          |
+          <button type="button" (click)="deleteBook(book.id, book.title)">
+            Eliminar
+          </button>
+          }
+        </td>
+      </tr>
       }
     </tbody>
   </table>
+  <app-pagination [pageNumber]="pageNumber()" [totalPages]="totalPages()" (previous)="previousPage()"
+    (next)="nextPage()">
+  </app-pagination>
 </div>

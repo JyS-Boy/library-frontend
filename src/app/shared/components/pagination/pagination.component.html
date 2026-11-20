@@ -1,0 +1,16 @@
+<div class="pagination">
+    <button type="button" (click)="previous.emit()" [disabled]="pageNumber === 1">
+        Anterior
+    </button>
+
+    <span>
+        Página
+        {{ pageNumber }}
+        de
+        {{ totalPages }}
+    </span>
+
+    <button type="button" (click)="next.emit()" [disabled]="pageNumber === totalPages">
+        Siguiente
+    </button>
+</div>

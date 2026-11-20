@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { inject } from '@angular/core';
+import { AuthService } from '../../core/services/auth.service';
 
 interface NavItem {
   label: string;
@@ -18,6 +20,21 @@ interface NavItem {
   styleUrls: ['./sidenav.component.scss'],
 })
 export class SidenavComponent {
+
+  private readonly authService = inject(AuthService);
+
+  get isAdmin(): boolean {
+    return this.authService.currentUser()?.role === 'Admin';
+  }
+
+  get visibleNavItems(): NavItem[] {
+    return this.navItems.filter(item => {
+      if (item.adminOnly) {
+        return this.isAdmin;
+      }
+      return true;
+    });
+  }
 
   readonly navItems: NavItem[] = [
     {

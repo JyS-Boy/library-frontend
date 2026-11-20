@@ -1,18 +1,9 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-
 import { map, Observable } from 'rxjs';
-
 import { API_ROUTES } from '../constants/api-routes.constants';
 import { ApiResult, PagedResult } from '../models/api-result.model';
-
-import {
-  Reader,
-  ListReaderItem,
-  CreateReaderRequest,
-  UpdateReaderRequest
-} from '../models/reader.model';
-
+import { Reader, ListReaderItem, CreateReaderRequest, UpdateReaderRequest } from '../models/reader.model';
 import { ApiFactoryService } from './api-factory.service';
 
 @Injectable({

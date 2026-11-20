@@ -1,0 +1,23 @@
+<div class="page">
+    <h1>Detalle de Usuario</h1>
+    @if (user()) {
+    <div class="card">
+        <div class="row">
+            <strong>Id:</strong>
+            <span>{{ user()?.id }}</span>
+        </div>
+
+        <div class="row">
+            <strong>Usuario:</strong>
+            <span>{{ user()?.userName }}</span>
+        </div>
+
+        <div class="row">
+            <strong>Rol:</strong>
+            <span>{{ user()?.role }}</span>
+        </div>
+    </div>
+    } @else {
+    <p>Cargando...</p>
+    }
+</div>

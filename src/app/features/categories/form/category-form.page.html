@@ -1,29 +1,10 @@
 <div class="page">
-
   <h1>Nueva Categoría</h1>
-
-  <form
-    [formGroup]="form"
-    (ngSubmit)="submit()">
-
+  <form [formGroup]="form" (ngSubmit)="submit()">
     <div class="form-group">
-
       <label>Nombre</label>
-
-      <input
-        type="text"
-        formControlName="name">
-
+      <input type="text" formControlName="name">
     </div>
-
-    <button
-      type="submit"
-      [disabled]="loading">
-
-      {{ loading ? 'Guardando...' : 'Guardar' }}
-
-    </button>
-
+    <button type="submit" [disabled]="loading">{{ loading ? 'Guardando...' : 'Guardar' }}</button>
   </form>
-
 </div>

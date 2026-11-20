@@ -5,6 +5,8 @@ import { API_ROUTES } from '../constants/api-routes.constants';
 import { ApiResult } from '../models/api-result.model';
 import { Loan, LoanListItem, CreateLoanRequest } from '../models/loan.model';
 import { ApiFactoryService } from './api-factory.service';
+import { HttpParams } from '@angular/common/http';
+import { PagedResult } from '../models/api-result.model';
 
 @Injectable({ providedIn: 'root' })
 
@@ -16,10 +18,14 @@ export class LoanService {
         return this.factory.create(API_ROUTES.LOANS.BASE).url;
     }
 
-    list(): Observable<LoanListItem[]> {
+    list(pageNumber: number, pageSize: number): Observable<PagedResult<LoanListItem[]>> {
+        const params = new HttpParams()
+            .set('pageNumber', pageNumber.toString())
+            .set('pageSize', pageSize.toString());
+
         return this.httpClient
-            .get<ApiResult<LoanListItem[]>>(this.baseUrl)
-            .pipe(map(result => result.value ?? []));
+            .get<ApiResult<PagedResult<LoanListItem[]>>>(this.baseUrl, { params })
+            .pipe(map(result => result.value!));
     }
 
     getById(id: string): Observable<Loan> {

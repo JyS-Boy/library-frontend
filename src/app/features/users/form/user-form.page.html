@@ -1,0 +1,25 @@
+<div class="page">
+    <h1>Nuevo Usuario</h1>
+
+    <form [formGroup]="form" (ngSubmit)="submit()">
+        <div class="form-group">
+            <label>Usuario</label>
+            <input type="text" formControlName="userName">
+        </div>
+
+        <div class="form-group">
+            <label>Contraseña</label>
+            <input type="password" formControlName="password">
+        </div>
+
+        <div class="form-group">
+            <label>Rol</label>
+            <select formControlName="role">
+                <option value="Admin">Admin</option>
+                <option value="Librarian">Librarian</option>
+            </select>
+        </div>
+
+        <button type="submit" [disabled]="loading">{{loading ? 'Guardando...' : 'Guardar'}}</button>
+    </form>
+</div>

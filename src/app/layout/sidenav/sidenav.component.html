@@ -1,15 +1,8 @@
 <aside class="sidenav">
 
-  @for(item of navItems; track item.route){
-
-    <a
-      [routerLink]="item.route"
-      routerLinkActive="active">
-
-      {{ item.label }}
-
-    </a>
-
+  @for(item of visibleNavItems; track item.route){
+  <a [routerLink]="item.route" routerLinkActive="active">
+    {{ item.label }}
+  </a>
   }
-
 </aside>

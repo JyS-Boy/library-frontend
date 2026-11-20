@@ -1,16 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
-import {
-  FormBuilder,
-  ReactiveFormsModule,
-  Validators
-} from '@angular/forms';
-
-import {
-  ActivatedRoute,
-  Router
-} from '@angular/router';
-
+import { AlertService } from '../../../core/services/alert.service';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CategoryService } from '../../../core/services/category.service';
 
 @Component({
@@ -23,21 +15,16 @@ import { CategoryService } from '../../../core/services/category.service';
   templateUrl: './category-edit.page.html',
   styleUrls: ['./category-edit.page.scss']
 })
+
 export class CategoryEditPage implements OnInit {
 
   private readonly fb = inject(FormBuilder);
-
-  private readonly route =
-    inject(ActivatedRoute);
-
-  private readonly router =
-    inject(Router);
-
-  private readonly categoryService =
-    inject(CategoryService);
+  private readonly route = inject(ActivatedRoute);
+  private readonly router = inject(Router);
+  private readonly categoryService = inject(CategoryService);
+  private readonly alertService = inject(AlertService);
 
   private categoryId = '';
-
   loading = false;
 
   form = this.fb.group({
@@ -46,31 +33,26 @@ export class CategoryEditPage implements OnInit {
   });
 
   ngOnInit(): void {
-
-    const id =
-      this.route.snapshot.paramMap.get('id');
+    const id = this.route.snapshot.paramMap.get('id');
 
     if (!id) {
       return;
     }
 
     this.categoryId = id;
-
     this.categoryService
       .getById(id)
       .subscribe({
         next: category => {
-
           this.form.patchValue({
             name: category.name,
             description: category.description
           });
-
         }
       });
   }
 
-  submit(): void {
+  async submit(): Promise<void> {
 
     if (this.form.invalid) {
       return;
@@ -79,32 +61,21 @@ export class CategoryEditPage implements OnInit {
     this.loading = true;
 
     this.categoryService
-      .update(
-        this.categoryId,
+      .update(this.categoryId,
         {
           name: this.form.value.name!,
-          description:
-            this.form.value.description ?? ''
+          description: this.form.value.description ?? ''
         }
       )
       .subscribe({
-        next: () => {
-
+        next: async () => {
           this.loading = false;
-
-          this.router.navigate([
-            '/categories'
-          ]);
-
+          await this.alertService.success('Categoría actualizada', 'La operación se realizó correctamente.');
+          this.router.navigate(['/categories']);
         },
-        error: () => {
-
+        error: async (error) => {
           this.loading = false;
-
-          alert(
-            'Error al actualizar categoría'
-          );
-
+          await this.alertService.error('Error', error.error?.message ?? 'No fue posible actualizar la categoría.');
         }
       });
   }
